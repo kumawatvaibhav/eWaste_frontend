@@ -1,0 +1,141 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 140 25% 98%;
+    --foreground: 140 10% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 140 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 140 10% 10%;
+
+    --primary: 142 41% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 80 25% 60%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 140 5% 94%;
+    --muted-foreground: 140 5% 40%;
+
+    --accent: 84 30% 55%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 140 10% 90%;
+    --input: 140 10% 90%;
+    --ring: 142 41% 35%;
+
+    --radius: 0.5rem;
+
+    /* Sidebar colors */
+    --sidebar-background: 140 25% 98%;
+    --sidebar-foreground: 140 10% 30%;
+    --sidebar-primary: 140 40% 40%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 140 15% 94%;
+    --sidebar-accent-foreground: 140 30% 20%;
+    --sidebar-border: 140 15% 90%;
+    --sidebar-ring: 142 41% 35%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    height: 100%;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/30 rounded-full transition-colors;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/50;
+  }
+
+  /* Focus styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  /* Glass card effect */
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-sm;
+  }
+
+  .bg-noise {
+    @apply bg-noise bg-opacity-[0.03];
+  }
+
+  /* Animated link underline */
+  .animated-link {
+    @apply relative after:absolute after:bg-primary after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  /* Button with subtle hover effect */
+  .subtle-button {
+    @apply transition-all duration-300 ease-out hover:bg-primary/10 active:scale-95;
+  }
+
+  /* Text with gradient */
+  .text-gradient {
+    @apply bg-gradient-to-r from-ewaste-600 to-ewaste-400 bg-clip-text text-transparent;
+  }
+
+  /* Interactive card hover effect */
+  .interactive-card {
+    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1;
+  }
+}
+
+@layer utilities {
+  /* Common animations */
+  .animate-on-scroll {
+    @apply opacity-0 translate-y-4 transition-all duration-700 ease-out;
+  }
+  .animate-on-scroll.appear {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Text balance for better typography */
+  .text-balance {
+    text-wrap: balance;
+  }
+}
