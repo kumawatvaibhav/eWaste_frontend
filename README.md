@@ -39,6 +39,6 @@ This project is built with .
 
 ## Deployed Link
 
-**URL** : 
+**URL** : https://e-waste-frontend.vercel.app/
 
 
