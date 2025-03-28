@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import { toast } from 'sonner';
 
@@ -214,7 +215,9 @@ export const wasteService = {
   
   getAllTransitions: async () => {
     try {
-      const response = await api.get('/transition/get/all');
+      // Updated to match Postman documentation
+      const response = await api.get('/api/transition/getAll');
+      console.log('Transitions response:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching transitions:', error);
@@ -224,7 +227,8 @@ export const wasteService = {
   
   getTransitionById: async (id: string) => {
     try {
-      const response = await api.get(`/transition/get/${id}`);
+      // Updated to match Postman documentation
+      const response = await api.get(`/api/transition/get/${id}`);
       return response.data;
     } catch (error) {
       console.error(`Error fetching transition with ID ${id}:`, error);
@@ -234,7 +238,8 @@ export const wasteService = {
   
   createTransition: async (data: any) => {
     try {
-      const response = await api.post('/transition/create', data);
+      // Updated to match Postman documentation
+      const response = await api.post('/api/transition/create', data);
       toast.success('Transition recorded successfully');
       return response.data;
     } catch (error) {
@@ -245,7 +250,9 @@ export const wasteService = {
   
   getAllListings: async () => {
     try {
-      const response = await api.get('/eWasteListing/get/all');
+      // Updated to match Postman documentation
+      const response = await api.get('/api/eWasteListing/getAll');
+      console.log('Listings response:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching e-waste listings:', error);
@@ -255,7 +262,8 @@ export const wasteService = {
   
   getListingById: async (id: string) => {
     try {
-      const response = await api.get(`/eWasteListing/get/${id}`);
+      // Updated to match Postman documentation
+      const response = await api.get(`/api/eWasteListing/get/${id}`);
       return response.data;
     } catch (error) {
       console.error(`Error fetching listing with ID ${id}:`, error);
@@ -265,7 +273,8 @@ export const wasteService = {
   
   createListing: async (data: any) => {
     try {
-      const response = await api.post('/eWasteListing/create', data);
+      // Updated to match Postman documentation
+      const response = await api.post('/api/eWasteListing/create', data);
       toast.success('E-waste listing created successfully');
       return response.data;
     } catch (error) {
@@ -276,7 +285,8 @@ export const wasteService = {
   
   updateListing: async (id: string, data: any) => {
     try {
-      const response = await api.put(`/eWasteListing/update/${id}`, data);
+      // Updated to match Postman documentation
+      const response = await api.put(`/api/eWasteListing/update/${id}`, data);
       toast.success('E-waste listing updated successfully');
       return response.data;
     } catch (error) {
@@ -287,7 +297,8 @@ export const wasteService = {
   
   deleteListing: async (id: string) => {
     try {
-      const response = await api.delete(`/eWasteListing/delete/${id}`);
+      // Updated to match Postman documentation
+      const response = await api.delete(`/api/eWasteListing/delete/${id}`);
       toast.success('E-waste listing deleted successfully');
       return response.data;
     } catch (error) {
