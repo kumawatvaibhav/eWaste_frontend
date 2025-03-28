@@ -10,13 +10,13 @@ import {
   Menu, 
   X, 
   ChevronRight,
-  Leaf
+  Leaf,
+  PackageOpen,
+  History
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
-
-
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -32,6 +32,16 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       title: 'Dashboard',
       icon: <LayoutDashboard className="w-5 h-5" />,
       path: '/dashboard'
+    },
+    {
+      title: 'Transitions',
+      icon: <History className="w-5 h-5" />,
+      path: '/transitions'
+    },
+    {
+      title: 'E-Waste Listings',
+      icon: <PackageOpen className="w-5 h-5" />,
+      path: '/listings'
     },
     {
       title: 'Analytics',

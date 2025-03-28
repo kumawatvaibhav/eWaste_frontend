@@ -1,0 +1,44 @@
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role?: string;
+}
+
+export interface Transition {
+  _id: string;
+  userId: string;
+  wasteType: string;
+  quantity: number;
+  unit: string;
+  date: string;
+  location: string;
+  description?: string;
+  status: 'pending' | 'completed' | 'cancelled';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface EwasteListing {
+  _id: string;
+  userId: string;
+  title: string;
+  description: string;
+  category: string;
+  condition: 'new' | 'like new' | 'good' | 'fair' | 'poor';
+  quantity: number;
+  price?: number;
+  location: string;
+  images?: string[];
+  status: 'available' | 'pending' | 'sold' | 'closed';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ImpactMetrics {
+  co2Saved: number;
+  waterSaved: number;
+  energySaved: number;
+  materialsRecovered: number;
+}

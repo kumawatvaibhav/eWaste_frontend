@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import { toast } from 'sonner';
 
@@ -210,6 +209,90 @@ export const wasteService = {
         { id: 4, name: 'Emma L.', points: 740, rank: 4 },
         { id: 5, name: 'David R.', points: 690, rank: 5 }
       ];
+    }
+  },
+  
+  getAllTransitions: async () => {
+    try {
+      const response = await api.get('/api/transitions');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching transitions:', error);
+      throw error;
+    }
+  },
+  
+  getTransitionById: async (id: string) => {
+    try {
+      const response = await api.get(`/api/transitions/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching transition with ID ${id}:`, error);
+      throw error;
+    }
+  },
+  
+  createTransition: async (data: any) => {
+    try {
+      const response = await api.post('/api/transitions', data);
+      toast.success('Transition recorded successfully');
+      return response.data;
+    } catch (error) {
+      console.error('Error creating transition:', error);
+      throw error;
+    }
+  },
+  
+  getAllListings: async () => {
+    try {
+      const response = await api.get('/api/listings');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching e-waste listings:', error);
+      throw error;
+    }
+  },
+  
+  getListingById: async (id: string) => {
+    try {
+      const response = await api.get(`/api/listings/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching listing with ID ${id}:`, error);
+      throw error;
+    }
+  },
+  
+  createListing: async (data: any) => {
+    try {
+      const response = await api.post('/api/listings', data);
+      toast.success('E-waste listing created successfully');
+      return response.data;
+    } catch (error) {
+      console.error('Error creating e-waste listing:', error);
+      throw error;
+    }
+  },
+  
+  updateListing: async (id: string, data: any) => {
+    try {
+      const response = await api.put(`/api/listings/${id}`, data);
+      toast.success('E-waste listing updated successfully');
+      return response.data;
+    } catch (error) {
+      console.error(`Error updating listing with ID ${id}:`, error);
+      throw error;
+    }
+  },
+  
+  deleteListing: async (id: string) => {
+    try {
+      const response = await api.delete(`/api/listings/${id}`);
+      toast.success('E-waste listing deleted successfully');
+      return response.data;
+    } catch (error) {
+      console.error(`Error deleting listing with ID ${id}:`, error);
+      throw error;
     }
   },
 };

@@ -11,6 +11,8 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Transitions from "./pages/Transitions";
+import Listings from "./pages/Listings";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Impact from "./pages/Impact";
@@ -38,6 +40,8 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/transitions" element={<Transitions />} />
+            <Route path="/listings" element={<Listings />} />
             <Route path="/about" element={<About />} />
             <Route path="/impact" element={<Impact />} />
             <Route path="/contact" element={<Contact />} />
