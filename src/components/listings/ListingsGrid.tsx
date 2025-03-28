@@ -33,7 +33,8 @@ const ListingsGrid: React.FC = () => {
     );
   }
 
-  const listings = data?.listings || [];
+  // Updated to handle the response format from the API
+  const listings = data?.data || [];
 
   const getStatusColor = (status: string) => {
     switch (status) {
