@@ -16,8 +16,11 @@ type AuthContextType = {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  pendingVerification: boolean;
+  currentEmail: string;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
+  verifyOtp: (otp: string) => Promise<void>;
   logout: () => void;
 };
 
@@ -30,6 +33,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [pendingVerification, setPendingVerification] = useState(false);
+  const [currentEmail, setCurrentEmail] = useState('');
+  const [tempUserData, setTempUserData] = useState<any>(null);
   const navigate = useNavigate();
 
   // Check if user is already logged in on mount
@@ -83,18 +89,72 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const register = async (name: string, email: string, password: string) => {
     setIsLoading(true);
     try {
+      console.log('Attempting registration for:', email);
       const response = await authService.register(name, email, password);
       
-      if (response.user) {
-        setUser(response.user);
-        toast.success('Registration successful! Welcome to eWaste.');
-        navigate('/dashboard');
-      } else {
-        throw new Error('Failed to retrieve user data after registration');
-      }
+      console.log('Registration API response:', response);
+      
+      // Store email for OTP verification
+      setCurrentEmail(email);
+      
+      // Store temporary user data
+      setTempUserData(response);
+      
+      // Set verification pending
+      setPendingVerification(true);
+      
+      toast.success('Registration initiated! Please verify your account with the OTP sent to your email.');
+      navigate('/verify-otp');
     } catch (error: any) {
       console.error('Registration error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Registration failed. Please try again.';
+      toast.error(errorMessage);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  // OTP verification function
+  const verifyOtp = async (otp: string) => {
+    setIsLoading(true);
+    try {
+      console.log('Verifying OTP for:', currentEmail);
+      const response = await authService.verifyOtp(currentEmail, otp);
+      
+      console.log('OTP verification response:', response);
+      
+      if (response.success && tempUserData) {
+        // Complete registration process
+        if (tempUserData.token) {
+          // Store token and user data
+          localStorage.setItem('ewaste-token', tempUserData.token);
+          
+          // Extract and store user data
+          const userData = {
+            id: tempUserData.userId || tempUserData.user?.id || 'unknown',
+            name: tempUserData.name || tempUserData.user?.name || currentEmail.split('@')[0],
+            email: currentEmail,
+            role: tempUserData.role || tempUserData.user?.role || 'user'
+          };
+          
+          localStorage.setItem('ewaste-user', JSON.stringify(userData));
+          setUser(userData);
+        }
+        
+        // Reset verification state
+        setPendingVerification(false);
+        setTempUserData(null);
+        setCurrentEmail('');
+        
+        toast.success('Account verified successfully! Welcome to eWaste.');
+        navigate('/dashboard');
+      } else {
+        toast.error('OTP verification failed. Please try again.');
+      }
+    } catch (error: any) {
+      console.error('OTP verification error:', error);
+      const errorMessage = error.response?.data?.message || error.message || 'OTP verification failed. Please try again.';
       toast.error(errorMessage);
       throw error;
     } finally {
@@ -115,8 +175,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     user,
     isAuthenticated: !!user,
     isLoading,
+    pendingVerification,
+    currentEmail,
     login,
     register,
+    verifyOtp,
     logout,
   };
 

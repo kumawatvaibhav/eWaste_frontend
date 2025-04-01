@@ -96,29 +96,29 @@ export const authService = {
       
       console.log('Registration API response:', response.data);
       
-      if (response.data.token) {
-        // Store token and user data
-        localStorage.setItem('ewaste-token', response.data.token);
-        
-        // Extract and store user data
-        const userData = {
-          id: response.data.userId || response.data.user?.id || 'unknown',
-          name: name,
-          email: email,
-          role: response.data.role || response.data.user?.role || 'user'
-        };
-        
-        localStorage.setItem('ewaste-user', JSON.stringify(userData));
-        
-        return {
-          token: response.data.token,
-          user: userData
-        };
-      } else {
-        throw new Error('Invalid response from server');
-      }
+      // For OTP flow, we don't store anything in localStorage yet
+      // We just return the response
+      return response.data;
     } catch (error) {
       console.error('Registration error:', error);
+      throw error;
+    }
+  },
+  
+  verifyOtp: async (email: string, otp: string) => {
+    try {
+      console.log('Verifying OTP for:', email);
+      
+      const response = await api.post('/api/auth/verify-otp', { 
+        email, 
+        otp 
+      });
+      
+      console.log('OTP verification API response:', response.data);
+      
+      return response.data;
+    } catch (error) {
+      console.error('OTP verification error:', error);
       throw error;
     }
   },
