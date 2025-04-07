@@ -1,10 +1,10 @@
 
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { PlusCircle, History } from 'lucide-react';
+import { History } from 'lucide-react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import TransitionList from '@/components/transitions/TransitionList';
+import TransitionDialog from '@/components/transitions/TransitionDialog';
 
 const Transitions: React.FC = () => {
   return (
@@ -17,10 +17,7 @@ const Transitions: React.FC = () => {
               Track and manage your e-waste disposal activities
             </p>
           </div>
-          <Button className="flex items-center gap-2">
-            <PlusCircle className="w-4 h-4" />
-            <span>Record Transition</span>
-          </Button>
+          <TransitionDialog />
         </div>
         
         <Tabs defaultValue="all" className="w-full">

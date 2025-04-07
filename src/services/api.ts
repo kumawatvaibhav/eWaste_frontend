@@ -1,9 +1,8 @@
-
 import axios from 'axios';
 import { toast } from 'sonner';
 
 // Base API URL
-const API_URL = import.meta.env.BACKEND_API || "https://googlesolutions-backend.onrender.com";
+const API_URL = "https://googlesolutions-backend.onrender.com";
 
 // Create axios instance with default config
 const api = axios.create({
@@ -132,6 +131,43 @@ export const authService = {
     const user = localStorage.getItem('ewaste-user');
     return user ? JSON.parse(user) : null;
   },
+  
+  updateProfile: async (userId: string, data: any) => {
+    try {
+      const response = await api.put(`/api/auth/update/${userId}`, data);
+      toast.success('Profile updated successfully');
+      return response.data;
+    } catch (error) {
+      console.error('Profile update error:', error);
+      throw error;
+    }
+  },
+  
+  resetPassword: async (email: string) => {
+    try {
+      const response = await api.post('/api/auth/reset-password', { email });
+      toast.success('Password reset instructions sent to your email');
+      return response.data;
+    } catch (error) {
+      console.error('Password reset error:', error);
+      throw error;
+    }
+  },
+  
+  changePassword: async (userId: string, currentPassword: string, newPassword: string) => {
+    try {
+      const response = await api.post('/api/auth/change-password', {
+        userId,
+        currentPassword,
+        newPassword
+      });
+      toast.success('Password changed successfully');
+      return response.data;
+    } catch (error) {
+      console.error('Password change error:', error);
+      throw error;
+    }
+  },
 };
 
 // E-waste data service
@@ -215,7 +251,7 @@ export const wasteService = {
   
   getAllTransitions: async () => {
     try {
-      // Updated to match Postman documentation
+      console.log('Fetching transitions from:', `${API_URL}/api/transition/getAll`);
       const response = await api.get('/api/transition/getAll');
       console.log('Transitions response:', response.data);
       return response.data;
@@ -227,7 +263,6 @@ export const wasteService = {
   
   getTransitionById: async (id: string) => {
     try {
-      // Updated to match Postman documentation
       const response = await api.get(`/api/transition/get/${id}`);
       return response.data;
     } catch (error) {
@@ -238,7 +273,6 @@ export const wasteService = {
   
   createTransition: async (data: any) => {
     try {
-      // Updated to match Postman documentation
       const response = await api.post('/api/transition/create', data);
       toast.success('Transition recorded successfully');
       return response.data;
@@ -250,7 +284,7 @@ export const wasteService = {
   
   getAllListings: async () => {
     try {
-      // Updated to match Postman documentation
+      console.log('Fetching listings from:', `${API_URL}/api/eWasteListing/getAll`);
       const response = await api.get('/api/eWasteListing/getAll');
       console.log('Listings response:', response.data);
       return response.data;
@@ -262,7 +296,6 @@ export const wasteService = {
   
   getListingById: async (id: string) => {
     try {
-      // Updated to match Postman documentation
       const response = await api.get(`/api/eWasteListing/get/${id}`);
       return response.data;
     } catch (error) {
@@ -273,7 +306,6 @@ export const wasteService = {
   
   createListing: async (data: any) => {
     try {
-      // Updated to match Postman documentation
       const response = await api.post('/api/eWasteListing/create', data);
       toast.success('E-waste listing created successfully');
       return response.data;
@@ -285,7 +317,6 @@ export const wasteService = {
   
   updateListing: async (id: string, data: any) => {
     try {
-      // Updated to match Postman documentation
       const response = await api.put(`/api/eWasteListing/update/${id}`, data);
       toast.success('E-waste listing updated successfully');
       return response.data;
@@ -297,7 +328,6 @@ export const wasteService = {
   
   deleteListing: async (id: string) => {
     try {
-      // Updated to match Postman documentation
       const response = await api.delete(`/api/eWasteListing/delete/${id}`);
       toast.success('E-waste listing deleted successfully');
       return response.data;

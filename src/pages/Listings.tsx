@@ -1,11 +1,12 @@
 
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { PlusCircle, Package, Search } from 'lucide-react';
+import { Package, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import ListingsGrid from '@/components/listings/ListingsGrid';
+import ListingDialog from '@/components/listings/ListingDialog';
 
 const Listings: React.FC = () => {
   return (
@@ -18,10 +19,7 @@ const Listings: React.FC = () => {
               Browse and manage electronic waste items available for recycling or reuse
             </p>
           </div>
-          <Button className="flex items-center gap-2">
-            <PlusCircle className="w-4 h-4" />
-            <span>Create Listing</span>
-          </Button>
+          <ListingDialog />
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 my-6">
@@ -56,7 +54,7 @@ const Listings: React.FC = () => {
               <p className="text-muted-foreground mb-4">
                 There are currently no e-waste items available. Check back later or create your own listing.
               </p>
-              <Button>Create a Listing</Button>
+              <ListingDialog trigger={<Button>Create a Listing</Button>} />
             </div>
           </TabsContent>
           
@@ -67,7 +65,7 @@ const Listings: React.FC = () => {
               <p className="text-muted-foreground mb-4">
                 Start listing your electronic waste items for recycling or reuse.
               </p>
-              <Button>Create Your First Listing</Button>
+              <ListingDialog trigger={<Button>Create Your First Listing</Button>} />
             </div>
           </TabsContent>
         </Tabs>

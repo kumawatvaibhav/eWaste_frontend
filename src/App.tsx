@@ -14,6 +14,7 @@ import VerifyOtp from "./pages/VerifyOtp";
 import Dashboard from "./pages/Dashboard";
 import Transitions from "./pages/Transitions";
 import Listings from "./pages/Listings";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Impact from "./pages/Impact";
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/transitions" element={<Transitions />} />
             <Route path="/listings" element={<Listings />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/about" element={<About />} />
             <Route path="/impact" element={<Impact />} />
             <Route path="/contact" element={<Contact />} />
