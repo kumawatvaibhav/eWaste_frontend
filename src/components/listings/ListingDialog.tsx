@@ -40,8 +40,8 @@ const ListingDialog: React.FC<ListingDialogProps> = ({
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-lg max-h-[85vh] p-4 overflow-hidden">
+        <DialogHeader className="pb-2">
           <DialogTitle>Create E-Waste Listing</DialogTitle>
           <DialogDescription>
             List your electronic waste items for recycling or reuse

@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { DialogClose } from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 import {
   Form,
@@ -114,105 +115,17 @@ const CreateListingForm: React.FC<CreateListingFormProps> = ({
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter listing title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea 
-                  placeholder="Describe the e-waste item(s)"
-                  className="resize-none" 
-                  rows={4}
-                  {...field} 
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <ScrollArea className="h-[calc(85vh-10rem)] pr-4">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <FormField
             control={form.control}
-            name="category"
+            name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Category</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Computers">Computers</SelectItem>
-                    <SelectItem value="Smartphones">Smartphones</SelectItem>
-                    <SelectItem value="Tablets">Tablets</SelectItem>
-                    <SelectItem value="Appliances">Appliances</SelectItem>
-                    <SelectItem value="Components">Components</SelectItem>
-                    <SelectItem value="Peripherals">Peripherals</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="condition"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Condition</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select condition" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="New">New</SelectItem>
-                    <SelectItem value="Like New">Like New</SelectItem>
-                    <SelectItem value="Good">Good</SelectItem>
-                    <SelectItem value="Fair">Fair</SelectItem>
-                    <SelectItem value="Poor">Poor</SelectItem>
-                    <SelectItem value="For Parts">For Parts</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="quantity"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Quantity</FormLabel>
+                <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input type="number" min="1" placeholder="1" {...field} />
+                  <Input placeholder="Enter listing title" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -221,86 +134,176 @@ const CreateListingForm: React.FC<CreateListingFormProps> = ({
           
           <FormField
             control={form.control}
-            name="location"
+            name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Location</FormLabel>
+                <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter location" {...field} />
+                  <Textarea 
+                    placeholder="Describe the e-waste item(s)"
+                    className="resize-none" 
+                    rows={3}
+                    {...field} 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-        </div>
-        
-        <FormField
-          control={form.control}
-          name="contactInfo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Contact Information</FormLabel>
-              <FormControl>
-                <Input placeholder="Email or phone number" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <div className="space-y-2">
-          <FormLabel>Images (Optional)</FormLabel>
-          <div className="border border-dashed border-gray-300 rounded-md p-4 text-center">
-            <Input
-              id="image-upload"
-              type="file"
-              multiple
-              accept="image/*"
-              className="hidden"
-              onChange={handleImageUpload}
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Computers">Computers</SelectItem>
+                      <SelectItem value="Smartphones">Smartphones</SelectItem>
+                      <SelectItem value="Tablets">Tablets</SelectItem>
+                      <SelectItem value="Appliances">Appliances</SelectItem>
+                      <SelectItem value="Components">Components</SelectItem>
+                      <SelectItem value="Peripherals">Peripherals</SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <label htmlFor="image-upload" className="cursor-pointer">
-              <div className="flex flex-col items-center justify-center space-y-2">
-                <Upload className="w-8 h-8 text-gray-400" />
-                <span className="text-sm text-gray-500">
-                  Click to upload images (max 5)
-                </span>
-              </div>
-            </label>
+            
+            <FormField
+              control={form.control}
+              name="condition"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Condition</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select condition" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="New">New</SelectItem>
+                      <SelectItem value="Like New">Like New</SelectItem>
+                      <SelectItem value="Good">Good</SelectItem>
+                      <SelectItem value="Fair">Fair</SelectItem>
+                      <SelectItem value="Poor">Poor</SelectItem>
+                      <SelectItem value="For Parts">For Parts</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
           
-          {uploadingImages && (
-            <div className="text-sm text-center text-muted-foreground">
-              Uploading images...
-            </div>
-          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Quantity</FormLabel>
+                  <FormControl>
+                    <Input type="number" min="1" placeholder="1" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter location" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           
-          {imageUrls.length > 0 && (
-            <div className="grid grid-cols-3 gap-2 mt-2">
-              {imageUrls.map((url, index) => (
-                <div 
-                  key={index} 
-                  className="relative h-16 bg-gray-100 rounded overflow-hidden"
-                >
-                  <img 
-                    src={url} 
-                    alt={`Uploaded ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
+          <FormField
+            control={form.control}
+            name="contactInfo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Contact Information</FormLabel>
+                <FormControl>
+                  <Input placeholder="Email or phone number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <div className="space-y-2">
+            <FormLabel>Images (Optional)</FormLabel>
+            <div className="border border-dashed border-gray-300 rounded-md p-3 text-center">
+              <Input
+                id="image-upload"
+                type="file"
+                multiple
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageUpload}
+              />
+              <label htmlFor="image-upload" className="cursor-pointer">
+                <div className="flex flex-col items-center justify-center space-y-1">
+                  <Upload className="w-6 h-6 text-gray-400" />
+                  <span className="text-xs text-gray-500">
+                    Click to upload images (max 5)
+                  </span>
                 </div>
-              ))}
+              </label>
             </div>
-          )}
-        </div>
-        
-        <div className="flex justify-end space-x-2 pt-4">
-          <DialogClose asChild>
-            <Button type="button" variant="outline">Cancel</Button>
-          </DialogClose>
-          <Button type="submit">Create Listing</Button>
-        </div>
-      </form>
-    </Form>
+            
+            {uploadingImages && (
+              <div className="text-xs text-center text-muted-foreground">
+                Uploading images...
+              </div>
+            )}
+            
+            {imageUrls.length > 0 && (
+              <div className="grid grid-cols-3 gap-2 mt-2">
+                {imageUrls.map((url, index) => (
+                  <div 
+                    key={index} 
+                    className="relative h-14 bg-gray-100 rounded overflow-hidden"
+                  >
+                    <img 
+                      src={url} 
+                      alt={`Uploaded ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          
+          <div className="flex justify-end space-x-2 pt-3 sticky bottom-0 bg-background">
+            <DialogClose asChild>
+              <Button type="button" variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button type="submit">Create Listing</Button>
+          </div>
+        </form>
+      </Form>
+    </ScrollArea>
   );
 };
 
