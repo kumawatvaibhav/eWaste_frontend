@@ -35,7 +35,7 @@ const ListingsGrid: React.FC = () => {
 
   // Updated to handle the response format from the API
   // The API might return data in different formats, so we need to be flexible
-  const listings = data?.listings || data?.data || [];
+  const listings = data?.listings || data?.data || data || [];
   console.log('Processed listings data:', listings);
 
   const getStatusColor = (status: string) => {

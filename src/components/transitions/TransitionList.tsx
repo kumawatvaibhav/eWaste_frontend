@@ -49,7 +49,7 @@ const TransitionList: React.FC = () => {
 
   // Updated to handle the response format from the API
   // The API might return data in different formats, so we need to be flexible
-  const transitions = data?.transitions || data?.data || [];
+  const transitions = data?.transitions || data?.data || data || [];
   console.log('Processed transitions data:', transitions);
 
   const getStatusColor = (status: string) => {
