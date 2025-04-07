@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   BarChart, 
@@ -12,11 +12,16 @@ import {
   ChevronRight,
   Leaf,
   PackageOpen,
-  History
+  History,
+  UserCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import ProfileForm from '@/components/profile/ProfileForm';
+import PasswordForm from '@/components/profile/PasswordForm';
+import ActivityHistory from '@/components/profile/ActivityHistory';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -25,6 +30,7 @@ interface DashboardLayoutProps {
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const menuItems = [
@@ -70,6 +76,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       setSidebarOpen(false);
     }
   };
+
+  // Check if we're on the settings page
+  const isSettingsPage = location.pathname === '/dashboard/settings';
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
@@ -164,12 +173,45 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           >
             <Menu className="w-5 h-5" />
           </button>
-          <h1 className="text-xl font-semibold ml-4 lg:ml-0">Dashboard</h1>
+          <h1 className="text-xl font-semibold ml-4 lg:ml-0">
+            {isSettingsPage ? "Settings" : "Dashboard"}
+          </h1>
         </header>
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto p-6">
-          {children}
+          {isSettingsPage ? (
+            <div className="mb-8">
+              <div className="mb-4">
+                <h2 className="text-2xl font-bold">User Profile</h2>
+                <p className="text-muted-foreground">
+                  Manage your account information and settings
+                </p>
+              </div>
+              
+              <Tabs defaultValue="profile" className="w-full">
+                <TabsList className="mb-4">
+                  <TabsTrigger value="profile">Profile</TabsTrigger>
+                  <TabsTrigger value="password">Password</TabsTrigger>
+                  <TabsTrigger value="activity">Activity</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="profile" className="space-y-4">
+                  <ProfileForm />
+                </TabsContent>
+                
+                <TabsContent value="password" className="space-y-4">
+                  <PasswordForm />
+                </TabsContent>
+                
+                <TabsContent value="activity" className="space-y-4">
+                  <ActivityHistory />
+                </TabsContent>
+              </Tabs>
+            </div>
+          ) : (
+            children
+          )}
         </main>
       </div>
     </div>
