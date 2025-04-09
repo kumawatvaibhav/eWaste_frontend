@@ -13,7 +13,8 @@ import {
   Leaf,
   PackageOpen,
   History,
-  UserCircle
+  UserCircle,
+  MessagesSquare
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -22,6 +23,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ProfileForm from '@/components/profile/ProfileForm';
 import PasswordForm from '@/components/profile/PasswordForm';
 import ActivityHistory from '@/components/profile/ActivityHistory';
+import ReviewTab from '@/components/reviews/ReviewTab';
+import path from 'path';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -50,14 +53,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       path: '/listings'
     },
     {
-      title: 'Analytics',
-      icon: <BarChart className="w-5 h-5" />,
-      path: '/dashboard/analytics'
-    },
-    {
-      title: 'Community',
-      icon: <Users className="w-5 h-5" />,
-      path: '/dashboard/community'
+      title: 'Reviews',
+      icon: <MessagesSquare className="w-5 h-5" />,
+      path: '/dashboard/reviews'
     },
     {
       title: 'Settings',
@@ -79,6 +77,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
   // Check if we're on the settings page
   const isSettingsPage = location.pathname === '/dashboard/settings';
+  const isReviewsPage = location.pathname === '/dashboard/reviews';
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
@@ -208,6 +207,16 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                   <ActivityHistory />
                 </TabsContent>
               </Tabs>
+              </div>
+          ) : isReviewsPage ? (
+            <div className="mb-8">
+              <div className="mb-4">
+                <h2 className="text-2xl font-bold">E-Waste Reviews</h2>
+                <p className="text-muted-foreground">
+                  See what others are saying about e-waste items and services
+                </p>
+              </div>
+              <ReviewTab />
             </div>
           ) : (
             children

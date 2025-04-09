@@ -102,7 +102,7 @@ const ListingsGrid: React.FC = () => {
                 <div className="space-y-1 text-sm text-muted-foreground">
                   <div className="flex items-center">
                     <MapPin className="w-4 h-4 mr-1" />
-                    <span>{listing.location}</span>
+                    <span>{listing.location?.name}</span>
                   </div>
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />

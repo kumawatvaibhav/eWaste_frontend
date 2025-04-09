@@ -10,14 +10,14 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { PlusCircle } from 'lucide-react';
-import CreateTransitionForm from './CreateTransitionForm';
+import CreateTransactionForm from './CreateTransactionForm';
 
-interface TransitionDialogProps {
+interface TransactionDialogProps {
   trigger?: React.ReactNode;
   onSuccess?: () => void;
 }
 
-const TransitionDialog: React.FC<TransitionDialogProps> = ({ 
+const TransactionDialog: React.FC<TransactionDialogProps> = ({ 
   trigger,
   onSuccess 
 }) => {
@@ -32,25 +32,25 @@ const TransitionDialog: React.FC<TransitionDialogProps> = ({
   
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+      {/* <DialogTrigger asChild>
         {trigger || (
           <Button className="flex items-center gap-2">
             <PlusCircle className="w-4 h-4" />
-            <span>Record Transition</span>
+            <span>Record Transaction</span>
           </Button>
         )}
-      </DialogTrigger>
+      </DialogTrigger> */}
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Record E-Waste Transition</DialogTitle>
+          <DialogTitle>Record E-Waste Transaction</DialogTitle>
           <DialogDescription>
             Document your e-waste disposal or recycling activity
           </DialogDescription>
         </DialogHeader>
-        <CreateTransitionForm onSuccess={handleSuccess} />
+        <CreateTransactionForm onSuccess={handleSuccess} />
       </DialogContent>
     </Dialog>
   );
 };
 
-export default TransitionDialog;
+export default TransactionDialog;

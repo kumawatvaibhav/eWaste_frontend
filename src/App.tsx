@@ -12,7 +12,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import VerifyOtp from "./pages/VerifyOtp";
 import Dashboard from "./pages/Dashboard";
-import Transitions from "./pages/Transitions";
+import Transitions from "./pages/transaction";
 import Listings from "./pages/Listings";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
@@ -43,6 +43,7 @@ const App = () => (
             <Route path="/verify-otp" element={<VerifyOtp />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/settings" element={<Dashboard />} />
+            <Route path="/dashboard/reviews" element={<Dashboard />} />
             <Route path="/transitions" element={<Transitions />} />
             <Route path="/listings" element={<Listings />} />
             <Route path="/about" element={<About />} />

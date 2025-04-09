@@ -6,7 +6,7 @@ export interface User {
   role?: string;
 }
 
-export interface Transition {
+export interface Transaction {
   _id: string;
   userId: string;
   wasteType: string;
@@ -41,4 +41,25 @@ export interface ImpactMetrics {
   waterSaved: number;
   energySaved: number;
   materialsRecovered: number;
+}
+
+export interface Review {
+  _id: string;
+  userId: string;
+  userName: string;
+  listingId?: string;
+  transitionId?: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+  title?: string;
+}
+
+export interface ReviewFormData {
+  title: string;
+  rating: number;
+  comment: string;
+  listingId?: string;
+  transitionId?: string;
 }

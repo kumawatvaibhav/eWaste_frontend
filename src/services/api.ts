@@ -3,7 +3,8 @@ import axios from 'axios';
 import { toast } from 'sonner';
 
 // Base API URL
-const API_URL = "https://googlesolutions-backend.onrender.com";
+const API_URL = import.meta.env.VITE_BACKEND_API;
+
 
 // Create axios instance with default config
 const api = axios.create({
@@ -88,7 +89,7 @@ export const authService = {
     try {
       console.log('Attempting registration with real API for:', email);
       
-      const response = await api.post('/api/auth/register', { 
+      const response = await api.post('/api/auth/signup', { 
         name, 
         email, 
         password 
@@ -157,7 +158,7 @@ export const authService = {
   
   changePassword: async (userId: string, currentPassword: string, newPassword: string) => {
     try {
-      const response = await api.post('/api/auth/change-password', {
+      const response = await api.put('/api/auth/change-password', {
         userId,
         currentPassword,
         newPassword
@@ -250,29 +251,29 @@ export const wasteService = {
     }
   },
   
-  getAllTransitions: async () => {
+  getAllTransactions: async () => {
     try {
-      console.log('Fetching transitions from:', `${API_URL}/api/transition`);
-      const response = await api.get('/api/transition');
-      console.log('Transitions response:', response.data);
+      console.log('Fetching transactions from:', `${API_URL}/api/transactions`);
+      const response = await api.get('/api/transaction');
+      console.log('Transactions response:', response.data);
       return response.data;
     } catch (error) {
-      console.error('Error fetching transitions:', error);
+      console.error('Error fetching transactions:', error);
       throw error;
     }
   },
   
-  getTransitionById: async (id: string) => {
+  getTransactionById: async (id: string) => {
     try {
-      const response = await api.get(`/api/transition/${id}`);
+      const response = await api.get(`/api/transaction/${id}`);
       return response.data;
     } catch (error) {
-      console.error(`Error fetching transition with ID ${id}:`, error);
+      console.error(`Error fetching transaction with ID ${id}:`, error);
       throw error;
     }
   },
   
-  createTransition: async (data: any) => {
+  createTransaction: async (data: any) => {
     try {
       const response = await api.post('/api/transition', data);
       toast.success('Transition recorded successfully');
@@ -282,11 +283,35 @@ export const wasteService = {
       throw error;
     }
   },
+
+  getPendingTransactions: async () => {
+    try {
+      console.log('Fetching pending transactions');
+      const response = await api.get('/api/transaction?status=pending');
+      console.log('Pending transactions response:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching pending transactions:', error);
+      throw error;
+    }
+  },
+  
+  getCompletedTransactions: async () => {
+    try {
+      console.log('Fetching completed transactions');
+      const response = await api.get('/api/transaction?status=completed');
+      console.log('Completed transactions response:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching completed transactions:', error);
+      throw error;
+    }
+  },
   
   getAllListings: async () => {
     try {
-      console.log('Fetching listings from:', `${API_URL}/api/eWasteListing`);
-      const response = await api.get('/api/eWasteListing');
+      console.log('Fetching listings from:', `${API_URL}/api/ewaste`);
+      const response = await api.post('/api/ewaste');
       console.log('Listings response:', response.data);
       return response.data;
     } catch (error) {
@@ -295,9 +320,31 @@ export const wasteService = {
     }
   },
   
-  getListingById: async (id: string) => {
+  getAvailableListings: async () => {
     try {
-      const response = await api.get(`/api/eWasteListing/${id}`);
+      console.log('Fetching available listings');
+      const response = await api.post('/api/ewaste?status=available');
+      console.log('Available listings response:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching available listings:', error);
+      throw error;
+    }
+  },
+
+  getListingBySearch: async (id: string) => {
+    try {
+      const response = await api.post(`/api/ewaste/search?${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching listing with ID ${id}:`, error);
+      throw error;
+    }
+  },
+
+  getListingByID: async (id: string) => {
+    try {
+      const response = await api.post(`/api/ewaste/${id}/request`);
       return response.data;
     } catch (error) {
       console.error(`Error fetching listing with ID ${id}:`, error);
@@ -307,7 +354,7 @@ export const wasteService = {
   
   createListing: async (data: any) => {
     try {
-      const response = await api.post('/api/eWasteListing', data);
+      const response = await api.post('/api/ewaste/create', data);
       toast.success('E-waste listing created successfully');
       return response.data;
     } catch (error) {
@@ -318,7 +365,7 @@ export const wasteService = {
   
   updateListing: async (id: string, data: any) => {
     try {
-      const response = await api.put(`/api/eWasteListing/${id}`, data);
+      const response = await api.patch(`/api/ewaste/${id}/requests`, data);
       toast.success('E-waste listing updated successfully');
       return response.data;
     } catch (error) {
@@ -329,7 +376,7 @@ export const wasteService = {
   
   deleteListing: async (id: string) => {
     try {
-      const response = await api.delete(`/api/eWasteListing/${id}`);
+      const response = await api.delete(`/api/ewaste/${id}/requests`);
       toast.success('E-waste listing deleted successfully');
       return response.data;
     } catch (error) {
@@ -338,5 +385,32 @@ export const wasteService = {
     }
   },
 };
+
+// Review service
+export const reviewService = {
+  getAllReviews: async () => {
+    try {
+      console.log('Fetching all reviews');
+      const response = await api.get('/api/review/67d9a5a03b40d27b87eba063');
+      console.log('All reviews response:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+      throw error;
+    }
+  },
+  
+  createReview: async (data: any) => {
+    try {
+      const response = await api.post('/api/review/add/', data);
+      toast.success('Review submitted successfully');
+      return response.data;
+    } catch (error) {
+      console.error('Error creating review:', error);
+      throw error;
+    }
+  },
+};
+
 
 export default api;

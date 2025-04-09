@@ -22,7 +22,7 @@ import { toast } from 'sonner';
 import { wasteService } from '@/services/api';
 import { useAuth } from '@/contexts/AuthContext';
 
-const transitionFormSchema = z.object({
+const transactionFormSchema = z.object({
   wasteType: z.string().min(1, 'Waste type is required'),
   quantity: z.string().min(1, 'Quantity is required'),
   unit: z.string().min(1, 'Unit is required'),
@@ -30,20 +30,20 @@ const transitionFormSchema = z.object({
   description: z.string().optional(),
 });
 
-type TransitionFormValues = z.infer<typeof transitionFormSchema>;
+type TransactionFormValues = z.infer<typeof transactionFormSchema>;
 
-interface CreateTransitionFormProps {
+interface CreateTransactionFormProps {
   onSuccess?: () => void;
 }
 
-const CreateTransitionForm: React.FC<CreateTransitionFormProps> = ({ 
+const CreateTransactionForm: React.FC<CreateTransactionFormProps> = ({ 
   onSuccess 
 }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   
-  const form = useForm<TransitionFormValues>({
-    resolver: zodResolver(transitionFormSchema),
+  const form = useForm<TransactionFormValues>({
+    resolver: zodResolver(transactionFormSchema),
     defaultValues: {
       wasteType: '',
       quantity: '',
@@ -53,14 +53,14 @@ const CreateTransitionForm: React.FC<CreateTransitionFormProps> = ({
     },
   });
 
-  const onSubmit = async (data: TransitionFormValues) => {
+  const onSubmit = async (data: TransactionFormValues) => {
     try {
       if (!user) {
-        toast.error('You must be logged in to record a transition');
+        toast.error('You must be logged in to record a transaction');
         return;
       }
       
-      const transitionData = {
+      const transactionData = {
         ...data,
         userId: user.id,
         quantity: parseFloat(data.quantity),
@@ -68,21 +68,21 @@ const CreateTransitionForm: React.FC<CreateTransitionFormProps> = ({
         status: 'pending',
       };
       
-      await wasteService.createTransition(transitionData);
+      await wasteService.createTransaction(transactionData);
       
       // Reset form
       form.reset();
       
       // Invalidate transitions query to refetch
-      queryClient.invalidateQueries({ queryKey: ['transitions'] });
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
       
       // Call onSuccess callback if provided
       if (onSuccess) {
         onSuccess();
       }
     } catch (error) {
-      console.error('Failed to create transition:', error);
-      toast.error('Failed to record transition. Please try again.');
+      console.error('Failed to create transaction:', error);
+      toast.error('Failed to record transaction. Please try again.');
     }
   };
 
@@ -198,4 +198,4 @@ const CreateTransitionForm: React.FC<CreateTransitionFormProps> = ({
   );
 };
 
-export default CreateTransitionForm;
+export default CreateTransactionForm;
